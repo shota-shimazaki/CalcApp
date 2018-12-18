@@ -6,9 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.util.Log;
 import android.support.design.widget.Snackbar;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     EditText mEditText1;
@@ -43,23 +42,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String str1 = mEditText1.getText().toString();
         String str2 = mEditText2.getText().toString();
 
-        if (str2.equals("")) {
+        double value1;
+        double value2;
+        try {
+            value1 = Double.parseDouble(str1);
+            value2 = Double.parseDouble(str2);
+        } catch (NumberFormatException e) {
+            Snackbar.make(v, "数字を入れてください", Snackbar.LENGTH_LONG)
+                    .show();
             return;
-            new View.OnClickListener() {
-                public void onClick(View view) {
-                    Snackbar.make(view, "数字を入力してください", Snackbar.LENGTH_INDEFINITE)
-                            .setAction("Action", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Log.d("UI-PARTS", "Snackbarをタップした");
-                                }
-                            }).show();
-                }
-            };
+        }
+       if(value2==0.0){
+                    Toast.makeText(this, "0での割り算はできません", Toast.LENGTH_LONG)
+                            .show();
+            return;
         }
 
-        double value1 =Double.parseDouble(str1);
-        double value2= Double.parseDouble(str2);
+            value1 = Double.parseDouble(str1);
+        value2 = Double.parseDouble(str2);
 
         switch (v.getId()) {
             case R.id.button1:
@@ -74,8 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 sum = value1 * value2;
                 break;
             case R.id.button4:
-                sum =  value1 / value2;
+                sum =  value1/value2;
                 break;
+
         }
 
             Intent intent = new Intent(this, SecondActivity.class);
