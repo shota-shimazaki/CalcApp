@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText mEditText1;
     EditText mEditText2;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mEditText1 = (EditText) findViewById(R.id.editText1);
         mEditText2 = (EditText) findViewById(R.id.editText2);
     }
-
-
     @Override
     public void onClick(View v) {
         double sum = 0.0;
@@ -52,36 +49,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .show();
             return;
         }
-       if(value2==0.0){
-                    Toast.makeText(this, "0での割り算はできません", Toast.LENGTH_LONG)
-                            .show();
-            return;
-        }
-
-            value1 = Double.parseDouble(str1);
+        value1 = Double.parseDouble(str1);
         value2 = Double.parseDouble(str2);
 
         switch (v.getId()) {
             case R.id.button1:
                 sum = value1 + value2;
                 break;
-
             case R.id.button2:
                 sum =  value1- value2;
                 break;
-
             case R.id.button3:
                 sum = value1 * value2;
                 break;
             case R.id.button4:
                 sum =  value1/value2;
+                if(value2==0.0){
+                    Toast.makeText(this, "0での割り算はできません", Toast.LENGTH_LONG)
+                            .show();
+                    return;
+                }
                 break;
-
         }
-
             Intent intent = new Intent(this, SecondActivity.class);
             intent.putExtra("sum",sum);
             startActivity(intent);
-
         }
     }
